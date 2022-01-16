@@ -20,13 +20,10 @@ double degtorad(double deg)
 	return ( deg * pi / 180);
 }
 
-// Function to calculate distance
-// between 2 given locations
-// using Great Circle Distance Formula.
+// Function to calculate distance between 2 given locations using Great Circle Distance Formula.
 double distanceEarth(double lat2d, double lon2d)
 {				
-	double lat1, lon1, lat2, lon2,
-		delta_lon, central_ang;
+	double lat1, lon1, lat2, lon2, delta_lon, central_ang;
 
 	lat1 = degtorad(lat1d);
 	lon1 = degtorad(lon1d);
@@ -36,45 +33,24 @@ double distanceEarth(double lat2d, double lon2d)
 	delta_lon = lon2 - lon1;
 	
 	// great circle distance formula.
-	central_ang = acos ( sin(lat1) *
-				sin(lat2) + cos(lat1) *
-				cos(lat2) * cos(delta_lon) );
+	central_ang = acos ( sin(lat1) * sin(lat2) + cos(lat1) * cos(lat2) * cos(delta_lon) );
 					
 	return (earth_radius * central_ang);
 }
 
-// Structure which contains data and
-// functions for accessing and processing
-// data from the given customers.json file.
+// Structure which contains data and functions for accessing and processing data from the given customers.json file.
 struct json
 {
-	/* i and j are used to access various
-	elements of the char arrays. x is used
-	to measure the size of the element of
-	latitude_as_string array. y is used to
-	measure the size of the element of
-	longitude_as_string array. m is used
-	to measure the size of the element
-	of id_as_string array. n is used to
-	measure the size of the element of
-	name array. f keeps count of " " "
-	symbol. fi keeps count of " : " symbol.
-	*/
-	long long int length, i, j, x, y, m,
-				n, f, fi, id[100000];
+	long long int length, i, j, x, y, m, n, f, fi, id[100000];
 	
-	char latitude_as_string[1000],
-		longitude_as_string[1000],
-		id_as_string[1000], name[1000];
+	char latitude_as_string[1000], longitude_as_string[1000], id_as_string[1000], name[1000];
 	
 	double lat2d, lon2d;
 	
-	// To get each line of customers.json
-	// file as string.
+	// To get each line of customers.json file as string.
 	string line;
 
-	// Function to check whether distance between
-	// 2 points is less than 50km or not.
+	// Function to check whether distance between 2 points is less than 50km or not.
 	void distance_calculator()
 	{
 		if (distanceEarth(lat2d, lon2d) <= 50.0000)
@@ -82,15 +58,11 @@ struct json
 			// Converting id to int format.
 			id[i] = atoll(id_as_string);
 			i++;
-			out << "{\"user_id\": " << id[i - 1] <<
-				", \"name\": " << name << "}" << endl;
+			out << "{\"user_id\": " << id[i - 1] << ", \"name\": " << name << "}" << endl;
 		}
 	}
 
-	// Function to read various attributes
-	// like latitude, longitude, name , id,
-	// etc, from customers.json file. simplistic
-	// approach is used to get JSON attributes.
+	// Function to read various attributes like latitude, longitude, name , id, etc, from customers.json file. simplistic approach is used to get JSON attributes.
 	void json_parser()
 	{					
 		if (customer_list.is_open())
@@ -170,8 +142,7 @@ struct json
 					}
 				}
 
-				// Converting latitude and longitude
-				// in string to float.
+				// Converting latitude and longitude in string to float.
 				lat2d = atof(latitude_as_string);
 				lon2d = atof(longitude_as_string);
 				distance_calculator();
